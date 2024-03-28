@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import Navigation from '../navigation/navigation';
 import Modal from '../modal/modal';
-
+import './calendar.css';
 
 export default function Calendar() {
   // Get current date
@@ -15,6 +15,7 @@ export default function Calendar() {
   const [prevDate, setPrevDate] = useState(prevDateObj);
   const [showModal, setShowModal] = useState(false);
   const [selectedCell, setSelectedCell] = useState(0);
+  const [darkMode, setDarkMode] = useState(false);
 
   // Function to get the number of days in a month
   const getDaysInMonth = (date) => {
@@ -69,6 +70,10 @@ export default function Calendar() {
       moveSelectedDown();
     } else if(keyCode == 13){
       setShowModal(true);
+    } else if(keyCode == 68){
+      setDarkMode(true);
+    } else if(keyCode == 76){
+      setDarkMode(false);
     }
   };
 
@@ -128,8 +133,6 @@ export default function Calendar() {
     return ((n % m) + m) % m;
   }
 
-
-
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
 
@@ -160,6 +163,14 @@ export default function Calendar() {
     updatedEvents.splice(index, 1);
     setEvents(updatedEvents);
   };
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   return (
     <div id="calendar-container">

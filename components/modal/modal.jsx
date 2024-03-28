@@ -28,7 +28,6 @@ const Modal = ({ onClose, onSubmit }) => {
     });
   };
 
-  //TODO: START AND END TIME BLANK NO ENTIRES
   return (
     <div className="modal">
       <div className="modal-content">
@@ -48,20 +47,23 @@ const Modal = ({ onClose, onSubmit }) => {
             value={eventData.description}
             onChange={handleInputChange}
             placeholder="Event Description"
+            style={{ width: '100%' }}
           ></textarea>
           <input
             type="datetime-local"
             name="startTime"
             value={eventData.startTime}
             onChange={handleInputChange}
+            //placeholder = "--/--/--"
           />
           <input
             type="datetime-local"
             name="endTime"
             value={eventData.endTime}
             onChange={handleInputChange}
+            //placeholder = "--/--/--"
           />
-          <button type="submit">Add Event</button>
+          <button type="submit" style={{ color: 'black' }}>Add Event</button>
         </form>
       </div>
     </div>
