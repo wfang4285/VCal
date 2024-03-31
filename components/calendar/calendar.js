@@ -61,13 +61,13 @@ export default function Calendar() {
     //Keycode is deprecated
     const { key } = event;
 
-    if(key === "ArrowLeft"){
+    if(key === "ArrowLeft" || key === "a"){
       moveSelectedLeft();
-    } else if(key === "ArrowRight"){
+    } else if(key === "ArrowRight" || key === "d"){
       moveSelectedRight();
-    } else if(key === "ArrowUp"){
+    } else if(key === "ArrowUp" || key === "w"){
       moveSelectedUp();
-    } else if(key === "ArrowDown"){
+    } else if(key === "ArrowDown" || key === "s"){
       moveSelectedDown();
     } else if(key === "Enter"){
       setShowModal(true);
