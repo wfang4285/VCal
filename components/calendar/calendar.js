@@ -58,22 +58,21 @@ export default function Calendar() {
 
   //Add event listener for keydown to switch between cells
   const handleKeyDown = (event) => {
-    const { keyCode } = event;
+    //Keycode is deprecated
+    const { key } = event;
 
-    if(keyCode == 37){
+    if(key === "ArrowLeft"){
       moveSelectedLeft();
-    } else if(keyCode == 39){
+    } else if(key === "ArrowRight"){
       moveSelectedRight();
-    } else if(keyCode == 38){
+    } else if(key === "ArrowUp"){
       moveSelectedUp();
-    } else if(keyCode == 40){
+    } else if(key === "ArrowDown"){
       moveSelectedDown();
-    } else if(keyCode == 13){
+    } else if(key === "Enter"){
       setShowModal(true);
-    } else if(keyCode == 68){ //D
-      setDarkMode(true);
-    } else if(keyCode == 76){ //L
-      setDarkMode(false);
+    } else if(keyCode == 76){ //L toggles darkmode
+      setDarkMode(!darkMode);
     }
   };
 
