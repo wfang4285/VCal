@@ -53,8 +53,17 @@ html, body {
   width: 100%;
 }
 
+.login-page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
 
 .login-container {
+  width: 100%;
+  max-width: 400px;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -66,9 +75,14 @@ h2 {
   color: #333;
 }
 
-label {
+.input{
+  margin-bottom: 15px
+}
+
+.input label {
   display: block;
-  margin: 10px 0 5px;
+  margin-bottom: 5px;
+  font-size: 15;
   color: #555;
 }
 
@@ -106,10 +120,10 @@ button {
   display: inline-block;
   user-select: none;
 }
-
+/*
 button:hover {
   box-shadow: 0 0 50px 5px rgba(200, 200, 200, 0.8);
-}
+}*/
 
 .dates, .days{
   display: grid;
@@ -145,17 +159,10 @@ button:hover {
 
 /* currently still under testing
 */
-.google-login-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #db4437; /* Google red color */
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px; /* Adjust as needed */
+.login-button {
+  background-color: #007bff;
 }
 
-.google-login-button:hover {
+.login-button:hover {
   background-color: #c1351e; /* Darker shade of Google red color */
 }

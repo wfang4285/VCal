@@ -1,25 +1,30 @@
 import React from 'react';
-
-export default function LoginPage() {
-    // Function to handle Google login button click
-    const handleGoogleLogin = () => {
-    };
-}
-
+import './global.css'
 
 export default function loginPage() {
+    function handleLogin(e){
+        e.preventDefault();
+    }
+    function handleGoogleLogin(){
+        console.log("Logging in with Google!")
+    }
     return(
-        <div class="login-container">
-            <h2>Login</h2>
-            <form action="your_login_handler.php" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required></input>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required></input>
-
-            <button type="submit">Login</button>
-            </form>
-        </div>
-    );
+    <div className="login-page">
+      <div className="login-container">
+        <h2>Login</h2>
+        <form onSubmit={handleLogin}>
+          <div className="input">
+            <label htmlFor="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+          <div className="input">
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <button type="submit" className="login-button">Log In</button>
+        </form>
+        <button onClick={handleGoogleLogin} className="google-login-button">Login with Google</button>
+      </div>
+    </div>
+  );
 }
