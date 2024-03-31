@@ -71,7 +71,7 @@ export default function Calendar() {
       moveSelectedDown();
     } else if(key === "Enter"){
       setShowModal(true);
-    } else if(keyCode == 76){ //L toggles darkmode
+    } else if(key === "l"){ //L toggles darkmode
       setDarkMode(!darkMode);
     }
   };
