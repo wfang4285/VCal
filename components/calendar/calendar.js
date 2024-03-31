@@ -72,7 +72,7 @@ export default function Calendar() {
     } else if(key === "Enter"){
       setShowModal(true);
     } else if(key === "l"){ //L toggles darkmode
-      setDarkMode(!darkMode);
+      setDarkMode((d) => !d);
     }
   };
 
