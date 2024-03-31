@@ -24,13 +24,14 @@ export default function Calendar() {
     return new Date(year, month, 0).getDate();
   };
 
-  // Function to get the first day of the month
+  // Function to get number of days before start of the month
   const getFirstDayOfMonth = (date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
     return new Date(year, month, 1).getDay();
   };
-
+  
+  // Function to get the number of days in the previous month
   const getPrevMonthDays = (date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -144,7 +145,7 @@ export default function Calendar() {
   const firstDayOfMonth = getFirstDayOfMonth(date);
   const prevMonthDays = getPrevMonthDays(date);
   const monthDays = Array.from({ length: daysInMonth }, (_, index) => index + 1);
-  const blankCells = Array.from({ length: firstDayOfMonth }, (_, index) => index);
+  const blankCells = Array.from({ length: firstDayOfMonth }, (_, index) => prevMonthDays - firstDayOfMonth + index);
 
   const AddEvent = (eventData) => {
     setEvents([...events, eventData]); 
@@ -188,8 +189,8 @@ export default function Calendar() {
           ))}
         </div>
         <div className="dates">
-          {blankCells.map((_, index) => (
-            <div key={`blank-${index}`} className="date empty"></div>
+          {blankCells.map((element, index) => (
+            <div key={`blank-${index}`} className="date">{element}</div>
           ))}
           {monthDays.map((day, index) => (
             <div
