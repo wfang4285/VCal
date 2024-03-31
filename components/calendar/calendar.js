@@ -70,9 +70,9 @@ export default function Calendar() {
       moveSelectedDown();
     } else if(keyCode == 13){
       setShowModal(true);
-    } else if(keyCode == 68){
+    } else if(keyCode == 68){ //D
       setDarkMode(true);
-    } else if(keyCode == 76){
+    } else if(keyCode == 76){ //L
       setDarkMode(false);
     }
   };
