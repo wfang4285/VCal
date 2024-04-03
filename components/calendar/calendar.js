@@ -60,7 +60,15 @@ export default function Calendar() {
   //Add event listener for keydown to switch between cells
   const handleKeyDown = (event) => {
     //Keycode is deprecated
-    const { key } = event;
+    const { key, target } = event;
+
+    //Prevents modal movement while creating event.
+    if(target.name === 'title' ||
+    target.name === 'description' ||
+    target.name === 'startTime' ||
+    target.name === 'endTime'){
+      return;
+    }
 
     if(key === "ArrowLeft" || key === "a"){
       moveSelectedLeft();
