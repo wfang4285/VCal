@@ -3,10 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const connectionString = process.env.MONGODB_URI;
 
-mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(connectionString)
   .then(() => console.log('MongoDB Atlas connected'))
   .catch(err => console.log(err));
 
@@ -18,5 +15,7 @@ const eventSchema = new mongoose.Schema({
 });
 
 const Event = mongoose.model('Event', eventSchema);
-
-module.exports = Event;
+module.exports = {
+  Event: Event,
+  connection: mongoose.connection
+};
