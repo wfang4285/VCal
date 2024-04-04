@@ -6,6 +6,7 @@ import Navigation from '../navigation/navigation';
 import Modal from '../modal/modal';
 import './calendar.css';
 import Event from '../mongo/db';
+import connectionString from '../mongo/db';
 
 export default function Calendar() {
   // Get current date
@@ -156,24 +157,23 @@ export default function Calendar() {
   const monthDays = Array.from({ length: daysInMonth }, (_, index) => index + 1);
   const blankCells = Array.from({ length: firstDayOfMonth }, (_, index) => prevMonthDays - firstDayOfMonth + index);
 
-  const AddEvent = (eventData) => {
-    const AddEvent = async (eventData) => {
-      try {
-        const { title, description, startTime, endTime } = eventData;
-        const newEvent = new Event({
-          title,
-          description,
-          startTime: new Date(startTime),
-          endTime: new Date(endTime),
-        });
-        await newEvent.save();
-        console.log('Event added successfully');
-      } catch (err) {
-        console.error('Error adding event:', err);
-      }
-    };  
-  };
-
+  //TODO: Connection string is saying not read???
+  const AddEvent = async (eventData, Event, connectionString) => {
+    try {
+      const { title, description, startTime, endTime } = eventData;
+      const newEvent = new Event({
+        title,
+        description,
+        startTime: new Date(startTime),
+        endTime: new Date(endTime),
+      });
+      await newEvent.save();
+      console.log('Event added successfully');
+    } catch (err) {
+      console.error('Error adding event:', err);
+    }
+  };  
+  
   const EditEvent = (index, updatedEvent) => {
     const updatedEvents = [...events];
     updatedEvents[index] = updatedEvent;
@@ -232,7 +232,7 @@ export default function Calendar() {
           onClose={() => setShowModal(false)}
           onSubmit={(eventData) => {
             // Handle event data submission here
-            console.log(eventData);
+            AddEvent(eventData, Event, connectionString);
             setShowModal(false);
           }}
         />
