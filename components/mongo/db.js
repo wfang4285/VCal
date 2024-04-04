@@ -3,6 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const connectionString = process.env.MONGODB_URI;
 
+//TODO: TypeError- mongoose.connect is not a function
 mongoose.connect(connectionString)
   .then(() => console.log('MongoDB Atlas connected'))
   .catch(err => console.log(err));
