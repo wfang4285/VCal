@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import Navigation from '../navigation/navigation';
 import Modal from '../modal/modal';
 import './calendar.css';
+import Event from '../mongo/db';
 
 export default function Calendar() {
   // Get current date
