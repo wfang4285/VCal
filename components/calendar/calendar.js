@@ -157,8 +157,21 @@ export default function Calendar() {
   const blankCells = Array.from({ length: firstDayOfMonth }, (_, index) => prevMonthDays - firstDayOfMonth + index);
 
   const AddEvent = (eventData) => {
-    setEvents([...events, eventData]); 
-    setShowModal(false);
+    const AddEvent = async (eventData) => {
+      try {
+        const { title, description, startTime, endTime } = eventData;
+        const newEvent = new Event({
+          title,
+          description,
+          startTime: new Date(startTime),
+          endTime: new Date(endTime),
+        });
+        await newEvent.save();
+        console.log('Event added successfully');
+      } catch (err) {
+        console.error('Error adding event:', err);
+      }
+    };  
   };
 
   const EditEvent = (index, updatedEvent) => {
