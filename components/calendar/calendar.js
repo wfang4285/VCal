@@ -71,8 +71,10 @@ export default function Calendar() {
     target.name === 'endTime'){
       return;
     }
-    if(key === "ArrowLeft"){
-
+    if(key === "ArrowLeft" && ctrlKey){
+      goToPrevMonth();
+    } else if(key === "ArrowRight" && ctrlKey){
+      goToNextMonth();
     } else if(key === "ArrowLeft" || key === "a"){
       moveSelectedLeft();
     } else if(key === "ArrowRight" || key === "d"){
