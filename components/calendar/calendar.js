@@ -241,6 +241,32 @@ export default function Calendar() {
     </div>
   );  
 
+  // <div id="calendar">
+  //       <div className="days">
+  //         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
+  //           <div key={day} className="day">
+  //             {day}
+  //           </div>
+  //         ))}
+  //       </div>
+  //       <div className="dates">
+  //         {blankCells.map((element, index) => (
+  //           <div key={`blank-${index}`} className="date">{element}</div>
+  //         ))}
+  //         {monthDays.map((day, index) => (
+  //           <div
+  //             key={day}
+  //             className={`date ${index === selectedCell ? 'selected' : ''}`}
+  //             onClick={() => {
+  //               setSelectedCell(index);
+  //             }}
+  //           >
+  //             {day}
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+
   return (
     <div id="calendar-container">
       <Navigation id="navigation-menu" currentDate={date} prevMonth={goToPrevMonth} nextMonth={goToNextMonth} ></Navigation>
