@@ -212,10 +212,7 @@ export default function Calendar() {
           ))}
         </div>
         <div className="dates">
-          {blankCells.map((element, index) => (
-            <div key={`blank-${index}`} className="date">{element}</div>
-          ))}
-          {monthDays.map((day, index) => (
+          {bothMonthsDays.map((day, index) => (
             <div
               key={day}
               className={`date ${index === selectedCell ? 'selected' : ''}`}
