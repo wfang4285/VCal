@@ -146,6 +146,7 @@ export default function Calendar() {
   const prevMonthDays = getPrevMonthDays(date);
   const monthDays = Array.from({ length: daysInMonth }, (_, index) => index + 1);
   const blankCells = Array.from({ length: firstDayOfMonth }, (_, index) => prevMonthDays - firstDayOfMonth + index);
+  const bothMonthsDays = blankCells.concat(monthDays);
 
   const AddEvent = (eventData) => {
     setEvents([...events, eventData]); 
