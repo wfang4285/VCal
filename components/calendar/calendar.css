@@ -1,10 +1,84 @@
+/* Calendar Container */
 #calendar-container {
-    background-color: #ffffff;
-    color: #000000;
-  }
-  
-  .dark-mode #calendar-container {
-    background-color: #333333;
-    color: #ffffff;
-  }
-  
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode #calendar-container {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+/* Navigation */
+.arrow-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.dark-mode .arrow-button {
+  background-color: #555555;
+  color: #ffffff;
+}
+
+.dark-mode .arrow-button:hover {
+  background-color: #666666;
+}
+
+.dark-mode #navigation-menu .month-year {
+  color: #ffffff;
+}
+/* Calendar */
+.dark-mode #calendar .days {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.dark-mode #calendar .dates .date {
+  background-color: #555555;
+  color: #ffffff;
+}
+
+.dark-mode #calendar .dates .date.selected {
+  background-color: #666666;
+}
+
+.dark-mode #calendar .dates .date:hover {
+  background-color: #777777;
+}
+
+.dark-mode .modal-overlay {
+  background-color: rgba(51, 51, 51, 0.8);
+}
+
+.dark-mode .modal {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.dark-mode .modal input,
+.dark-mode .modal textarea {
+  background-color: #555555;
+  color: #ffffff;
+}
+
+.dark-mode .modal button {
+  background-color: #666666;
+  color: #ffffff;
+}
+
+.dark-mode .modal button:hover {
+  background-color: #777777;
+}
+
+.dark-mode #calendar .days .day {
+  color: #ffffff;
+}
