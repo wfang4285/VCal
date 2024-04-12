@@ -12,10 +12,11 @@ export default function Calendar() {
   // Get current date
   const currentDate = new Date();
   const prevDateObj = new Date();
+  const nextDateObj = new Date();
   prevDateObj.setMonth(currentDate.getMonth() - 1);
   const [date, setDate] = useState(currentDate);
   const [prevDate, setPrevDate] = useState(prevDateObj);
-  const [nextDate, setNextDate] = useState(prevDateObj);
+  const [nextDate, setNextDate] = useState(nextDateObj);
   const [showModal, setShowModal] = useState(false);
   const [selectedCell, setSelectedCell] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
@@ -44,7 +45,7 @@ export default function Calendar() {
   // Function to get the number of days in the previous month
   const getNextMonthDays = (date) => {
     const year = date.getFullYear();
-    const month = date.getMonth();
+    const month = date.getMonth() + 2;
     return new Date(year, month, 0).getDate();
   }
 
