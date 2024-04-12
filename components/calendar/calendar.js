@@ -159,9 +159,9 @@ export default function Calendar() {
   const prevMonthDays = getPrevMonthDays(date);
   const calendarDays = Array.from({ length: daysInMonth + firstDayOfMonth }, (_, index) => {
     if (index < firstDayOfMonth) {
-      return prevMonthDays - firstDayOfMonth + index + 1;
+      return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
     } else {
-      return index - firstDayOfMonth + 1;
+      return {day: index - firstDayOfMonth + 1, id: index};
     }
   });
 
@@ -221,13 +221,13 @@ export default function Calendar() {
         <div className="dates">
           {calendarDays.map((day, index) => (
             <div
-              key={day}
+              key={day.id}
               className={`date ${index === selectedCell ? 'selected' : ''}`}
               onClick={() => {
                 setSelectedCell(index);
               }}
             >
-              {day}
+              {day.day}
             </div>
           ))}
         </div>
