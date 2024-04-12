@@ -92,9 +92,9 @@ export default function Calendar() {
 
   const moveSelectedRight = () => {
     setSelectedCell((current)=>{
-      current = mod(current+1,monthDays.length);
-      if(current != mod(current, monthDays.length)){
-        current = mod(current, monthDays.length);
+      current = mod(current+1,calendarDays.length);
+      if(current != mod(current, calendarDays.length)){
+        current = mod(current, calendarDays.length);
       } else {
         console.log("current cell:" + current);
       }
@@ -105,9 +105,9 @@ export default function Calendar() {
 
   const moveSelectedLeft = () => {
     setSelectedCell((current)=>{
-      current = mod(current-1,monthDays.length);
-      if(current != mod(current, monthDays.length)){
-        current = mod(current, monthDays.length);
+      current = mod(current-1,calendarDays.length);
+      if(current != mod(current, calendarDays.length)){
+        current = mod(current, calendarDays.length);
       } else {
         console.log("current cell:" + current);
       }
@@ -118,9 +118,9 @@ export default function Calendar() {
 
   const moveSelectedUp = () => {
     setSelectedCell((current)=>{
-      current = mod(current-7, monthDays.length);
-      if(current != mod(current, monthDays.length)){
-        current = mod(current, monthDays.length);
+      current = mod(current-7, calendarDays.length);
+      if(current != mod(current, calendarDays.length)){
+        current = mod(current, calendarDays.length);
       } else {
         console.log("current cell:" + current);
       }
@@ -131,9 +131,9 @@ export default function Calendar() {
   
   const moveSelectedDown = () => {
     setSelectedCell((current)=>{
-      current = mod(current+7,monthDays.length);
-      if(current != mod(current, monthDays.length)){
-        current = mod(current, monthDays.length);
+      current = mod(current+7,calendarDays.length);
+      if(current != mod(current, calendarDays.length)){
+        current = mod(current, calendarDays.length);
       } else {
         console.log("current cell:" + current);
       }
