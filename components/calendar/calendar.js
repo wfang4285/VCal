@@ -42,13 +42,6 @@ export default function Calendar() {
     return new Date(year, month, 0).getDate();
   }
 
-  // Function to get the number of days in the previous month
-  const getNextMonthDays = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 2;
-    return new Date(year, month, 0).getDate();
-  }
-
   // Function to handle previous month button click
   const goToPrevMonth = () => {
     const newDate = new Date(date);
@@ -166,7 +159,8 @@ export default function Calendar() {
   const daysInMonth = getDaysInMonth(date);
   const firstDayOfMonth = getFirstDayOfMonth(date);
   const prevMonthDays = getPrevMonthDays(date);
-  const calendarDays = Array.from({ length: daysInMonth + firstDayOfMonth }, (_, index) => {
+  const remainingDays = getRemainingDays(date);
+  const calendarDays = Array.from({ length: daysInMonth + firstDayOfMonth + nextMonthDays}, (_, index) => {
     if (index < firstDayOfMonth) {
       return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
     } else {
