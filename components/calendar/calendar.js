@@ -17,6 +17,7 @@ export default function Calendar() {
   const [prevDate, setPrevDate] = useState(prevDateObj);
   const [showModal, setShowModal] = useState(false);
   const [selectedCell, setSelectedCell] = useState(0);
+  const [days, setDays] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
 
   // Function to get the number of days in a month
@@ -48,6 +49,13 @@ export default function Calendar() {
     newPrevDate.setMonth(newPrevDate.getMonth() - 2);
     setDate(newDate);
     setPrevDate(prevDate);
+    setDays()
+  };
+
+  const updateDays = () => {
+    const monthDays = Array.from({ length: daysInMonth }, (_, index) => index + 1);
+    const blankCells = Array.from({ length: firstDayOfMonth }, (_, index) => prevMonthDays - firstDayOfMonth + index);
+    let bothMonthsDays = blankCells.concat(monthDays);
   };
 
   // Function to handle next month button click
@@ -157,9 +165,7 @@ export default function Calendar() {
   const daysInMonth = getDaysInMonth(date);
   const firstDayOfMonth = getFirstDayOfMonth(date);
   const prevMonthDays = getPrevMonthDays(date);
-  const monthDays = Array.from({ length: daysInMonth }, (_, index) => index + 1);
-  const blankCells = Array.from({ length: firstDayOfMonth }, (_, index) => prevMonthDays - firstDayOfMonth + index);
-  const bothMonthsDays = blankCells.concat(monthDays);
+
 
   //TODO: Connection string is saying not read???
   const AddEvent = async (eventData, Event, connectionString) => {
