@@ -153,6 +153,12 @@ export default function Calendar() {
     });
   }
 
+  const getNextMonthDays = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Adding 1 to get the next month
+    return new Date(year, month, 0).getDate();
+  };
+
   function mod(n, m) {
     return ((n % m) + m) % m;
   }
@@ -169,6 +175,7 @@ export default function Calendar() {
   const firstDayOfMonth = getFirstDayOfMonth(date);
   const prevMonthDays = getPrevMonthDays(date);
   const remainingDays = getRemainingDays(date);
+  const nextMonthDays = getNextMonthDays(date);
   const calendarDays = Array.from({ length: daysInMonth + firstDayOfMonth + nextMonthDays}, (_, index) => {
     if (index < firstDayOfMonth) {
       return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
@@ -177,20 +184,20 @@ export default function Calendar() {
     }
   });
 
-  const AddEvent = async (eventData, Event, connectionURI) => {
-    try {
-      const { title, description, startTime, endTime } = eventData;
-      const newEvent = new Event({
-        title,
-        description,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
-        index,
-      });
-      await newEvent.save();
-      console.log('Event added successfully');
-    } catch (err) {
-      console.error('Error adding event:', err);
+  const AddEvent = async (eventData, model, connectionURI) => {
+    const eventData = await model.findOne({ index });
+
+    if (eventData) {
+      eventData.title = updatedEvent.title;
+      eventData.description = updatedEvent.description;
+      eventData.startTime = new Date(updatedEvent.startTime);
+      eventData.endTime = new Date(updatedEvent.endTime);
+
+      await eventData.save();
+
+      console.log('Event updated successfully');
+    } else {
+      console.log('Event not found');
     }
   };  
   
@@ -253,7 +260,7 @@ export default function Calendar() {
           onClose={() => setShowModal(false)}
           onSubmit={(eventData) => {
             // Handle event data submission here
-            AddEvent(eventData, model, connectionString);
+            AddEvent(eventData, model, connectionURI);
             setShowModal(false);
           }}
         />
