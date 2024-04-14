@@ -5,8 +5,9 @@ import { useEffect } from 'react';
 import Navigation from '../navigation/navigation';
 import Modal from '../modal/modal';
 import './calendar.css';
-import Event from '../mongo/db';
-import connectionString from '../mongo/db';
+import Event from '../mongo/db.mjs';
+import connectionURI from '../mongo/db.mjs';
+import mongoose from '../mongo/db.mjs';
 
 export default function Calendar() {
   // Get current date
@@ -40,6 +41,10 @@ export default function Calendar() {
     const year = date.getFullYear();
     const month = date.getMonth();
     return new Date(year, month, 0).getDate();
+  };
+
+  const getRemainingDays  = (date) => {
+    //
   }
 
   // Function to handle previous month button click
@@ -168,8 +173,7 @@ export default function Calendar() {
     }
   });
 
-  //TODO: Connection string is saying not read???
-  const AddEvent = async (eventData, Event, connectionString) => {
+  const AddEvent = async (eventData, Event, connectionURI) => {
     try {
       const { title, description, startTime, endTime } = eventData;
       const newEvent = new Event({
@@ -204,6 +208,11 @@ export default function Calendar() {
       document.body.classList.remove('dark-mode');
     }
   }, [darkMode]);
+
+  async function fetchEvents() {
+    const eventData = await Event.find({});
+    AddEvent(eventData);
+  }
 
   return (
     <div id="calendar-container">
