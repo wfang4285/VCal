@@ -14,6 +14,7 @@ Frontend:
 Backend:
 - Next.js
 - MongoDB
+- Mongoose
 - Google OAuth
 
 ## Getting Started
