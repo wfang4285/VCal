@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
+import mongoose from 'mongoose';
 import { useEffect } from 'react';
 import Navigation from '../navigation/navigation';
 import Modal from '../modal/modal';
 import './calendar.css';
-import Event from '../mongo/db.mjs';
-import connectionURI from '../mongo/db.mjs';
-import mongoose from '../mongo/db.mjs';
+import { model, connectionURI } from '../mongo/db.mjs';
 
 export default function Calendar() {
   // Get current date
@@ -198,7 +197,7 @@ export default function Calendar() {
   //Test, change it so index doesn't need to be added in manually and is done in back
   //Deletion from database needs to be done
   const EditEvent = (index, updatedEvent) => {
-    const eventData = Event.find({index});
+    const eventData = model.find({index});
     eventData.title = updatedEvent.title;
     eventData.description = updatedEvent.description;
     eventData.startTime = updatedEvent.startTime;
@@ -215,7 +214,7 @@ export default function Calendar() {
   }, [darkMode]);
 
   async function fetchEvents() {
-    const eventData = await Event.find({});
+    const eventData = await model.find({});
     AddEvent(eventData);
   }
 
@@ -254,7 +253,7 @@ export default function Calendar() {
           onClose={() => setShowModal(false)}
           onSubmit={(eventData) => {
             // Handle event data submission here
-            AddEvent(eventData, Event, connectionString);
+            AddEvent(eventData, model, connectionString);
             setShowModal(false);
           }}
         />

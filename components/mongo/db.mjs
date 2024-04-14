@@ -14,6 +14,5 @@ const event = new mongoose.Schema({
   index: {type: String, required: true },
 });
 
-const Event = mongoose.model('Event', event);
-
-export { Event, connectionURI, mongoose };
+const model = mongoose.model('Event', event);
+export { model, connectionURI};
