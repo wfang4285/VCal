@@ -43,9 +43,14 @@ export default function Calendar() {
     return new Date(year, month, 0).getDate();
   };
 
-  const getRemainingDays  = (date) => {
-    //
-  }
+  const getRemainingDays = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
+    const totalDays = daysInMonth + firstDayOfMonth;
+    return 42 - totalDays;
+  };
 
   // Function to handle previous month button click
   const goToPrevMonth = () => {
