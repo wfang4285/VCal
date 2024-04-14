@@ -6,6 +6,7 @@ const Modal = ({ onClose, onSubmit }) => {
     description: '',
     startTime: '',
     endTime: '',
+    index: '',
   });
 
   const handleInputChange = (e) => {
@@ -62,6 +63,13 @@ const Modal = ({ onClose, onSubmit }) => {
             value={eventData.endTime}
             onChange={handleInputChange}
             //placeholder = "--/--/--"
+          />
+          <input
+            type="text"
+            name="index"
+            value={eventData.index}
+            onChange={handleInputChange}
+            placeholder="Event Index Number"
           />
           <button type="submit" style={{ color: 'black' }}>Add Event</button>
         </form>

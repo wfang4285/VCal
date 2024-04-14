@@ -186,6 +186,7 @@ export default function Calendar() {
         description,
         startTime: new Date(startTime),
         endTime: new Date(endTime),
+        index,
       });
       await newEvent.save();
       console.log('Event added successfully');
@@ -194,15 +195,14 @@ export default function Calendar() {
     }
   };  
   
+  //Test, change it so index doesn't need to be added in manually and is done in back
+  //Deletion from database needs to be done
   const EditEvent = (index, updatedEvent) => {
-    const updatedEvents = [...events];
-    updatedEvents[index] = updatedEvent;
-    setEvents(updatedEvents);
-  };
-
-  const DeleteEvent = (index) => {
-    const updatedEvents = [...events];
-    updatedEvents.splice(index, 1);
+    const eventData = Event.find({index});
+    eventData.title = updatedEvent.title;
+    eventData.description = updatedEvent.description;
+    eventData.startTime = updatedEvent.startTime;
+    eventData.endTime = updatedEvent.endTime;
     setEvents(updatedEvents);
   };
 

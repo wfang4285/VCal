@@ -11,6 +11,7 @@ const event = new mongoose.Schema({
   description: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
+  index: {type: String, required: true },
 });
 
 const Event = mongoose.model('Event', event);
