@@ -42,14 +42,14 @@ export default function Calendar() {
     return new Date(year, month, 0).getDate();
   };
 
-  const getRemainingDays = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const daysInMonth = new Date(year, month, 0).getDate();
-    const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
-    const totalDays = daysInMonth + firstDayOfMonth;
-    return 42 - totalDays;
-  };
+  // const getRemainingDays = (date) => {
+  //   const year = date.getFullYear();
+  //   const month = date.getMonth()+2;
+  //   return new Date(year, month, 0).getDate();
+  //   // const totalDays = daysInMonth + firstDayOfMonth;
+  //   // return 42 - totalDays;
+
+  // };
 
   // Function to handle previous month button click
   const goToPrevMonth = () => {
@@ -174,13 +174,15 @@ export default function Calendar() {
   const daysInMonth = getDaysInMonth(date);
   const firstDayOfMonth = getFirstDayOfMonth(date);
   const prevMonthDays = getPrevMonthDays(date);
-  const remainingDays = getRemainingDays(date);
+  // const remainingDays = getRemainingDays(date);
   const nextMonthDays = getNextMonthDays(date);
-  const calendarDays = Array.from({ length: daysInMonth + firstDayOfMonth + nextMonthDays}, (_, index) => {
+  const calendarDays = Array.from({ length: 35}, (_, index) => {
     if (index < firstDayOfMonth) {
       return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
-    } else {
+    } else if(index > daysInMonth + firstDayOfMonth - 1){
       return {day: index - firstDayOfMonth + 1, id: index};
+    } else {
+      return{day: daysInMonth + firstDayOfMonth - 1, id: index}
     }
   });
 
