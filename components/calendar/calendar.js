@@ -26,6 +26,9 @@ export default function Calendar() {
   //Temporary user data storage before implementing database
   useEffect(() => {
     let userDataValue = localStorage.getItem("userData") || "";
+    if(userDataValue === ""){
+      localStorage.setItem("userData", "[]");
+    }
     setUserData(userDataValue);
   }, []);
 
@@ -39,6 +42,11 @@ export default function Calendar() {
   const setUserDataLocal = (userData) => {
     let userDataJSON = JSON.stringify(userData);
     localStorage.setItem("userData", userDataJSON);
+  }
+
+
+  const interpretTime = (string) => {
+
   }
 
   // Function to get the number of days in a month
@@ -75,8 +83,12 @@ export default function Calendar() {
   const goToPrevMonth = () => {
     const newDate = new Date(date);
     const newPrevDate = new Date(date); 
+    const newNextDate = new Date(date); 
+    // newNextDate.setMonth(newNextDate.getMonth());
     newDate.setMonth(newDate.getMonth() - 1);
     newPrevDate.setMonth(newPrevDate.getMonth() - 2);
+
+    setNextDate(newNextDate)
     setDate(newDate);
     setPrevDate(prevDate);
   };
@@ -85,9 +97,15 @@ export default function Calendar() {
   const goToNextMonth = () => {
     const newDate = new Date(date);
     const newPrevDate = new Date(date);
+    const newNextDate = new Date(date); 
+    //newly added
+    newNextDate.setMonth(newDate.getMonth() + 2);
     newDate.setMonth(newDate.getMonth() + 1);
+
+    setNextDate(newNextDate)
     setDate(newDate);
     setPrevDate(newPrevDate);
+
   };
 
   //Add event listener for keydown to switch between cells
@@ -115,11 +133,22 @@ export default function Calendar() {
     } else if(key === "ArrowDown" || key === "s"){
       moveSelectedDown();
     } else if(key === "Enter"){
+      addEvent();
       // setShowModal(true);
     } else if(key === "l"){ //L toggles darkmode
       setDarkMode((d) => !d);
     }
   };
+
+  const getSelectedCellDate = () => {
+    return calendarDays[selectedCell];    
+  }
+
+  const addEvent = (tempText) => {
+    let tempEventArray = getUserData();
+    tempEventArray.push({text: tempText, year: "", month: "", day:""});
+  }
+
 
   const moveSelectedRight = () => {
     setSelectedCell((current)=>{
@@ -183,6 +212,16 @@ export default function Calendar() {
     return ((n % m) + m) % m;
   }
 
+  //Each event has a cooresponding ISO
+  const getEventsFromDate = (year, month, day) => {
+    let tempArray = getUserData();
+    //Filter events by date
+    let eventsFromDate = tempArray.filter(function(e, i){
+      return e.year === year && e.month === month && e.day === day;
+    });
+    return eventsFromDate;
+  }
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
 
@@ -191,21 +230,49 @@ export default function Calendar() {
     };
   }, [date]);
 
+  //Gets number of days in the current omnth
   const daysInMonth = getDaysInMonth(date);
+  //Gets at what point the first day of the month starts
   const firstDayOfMonth = getFirstDayOfMonth(date);
   const prevMonthDays = getPrevMonthDays(date);
   // const remainingDays = getRemainingDays(date);
   const nextMonthDays = getNextMonthDays(date);
   const calendarDays = Array.from({ length: 35}, (item, index) => {
+    let tempEvents;
+    let tempDay;
+    let tempMonth;
+    let tempYear;
     // console.log(prevMonthDays);
     if (index < firstDayOfMonth) {
-      return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index, events:{}};
+      tempDay = prevMonthDays - firstDayOfMonth + index + 1;
+      tempMonth = prevDate.getMonth();
+      tempYear = prevDate.getYear();
+      
     } else if(index < daysInMonth + firstDayOfMonth){
-      console.log(index - firstDayOfMonth + 1);
-      return {day: index - firstDayOfMonth + 1, id: index};
+      tempDay = index - firstDayOfMonth + 1;
+      tempMonth = date.getMonth();
+      tempYear = date.getYear();
+      return {
+        day: index - firstDayOfMonth + 1, 
+        month: date.getMonth(),
+        year: date.getYear(),
+        id: index,
+        events:{}
+      };
     } else {
-      return{day: index - firstDayOfMonth + 1 - daysInMonth, id: index}
+      tempDay = index - firstDayOfMonth + 1 - daysInMonth;
+      tempMonth = nextDate.getMonth();
+      tempYear = nextDate.getYear();
     }
+
+    tempEvents = getEventsFromDate(tempYear, tempMonth, tempDay);
+    return {
+      day: tempDay, 
+      month: tempMonth,
+      year: tempYear, 
+      id: index, 
+      events: tempEvents
+    };
   });
 
   // Temporarily comment out to avoid async error
@@ -265,7 +332,8 @@ export default function Calendar() {
             <div key={day} className="day">
               {day}
               <div className="event-list">
-                {}
+                {
+                }
               </div>
             </div>
           ))}
