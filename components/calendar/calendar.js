@@ -9,6 +9,8 @@ import './calendar.css';
 import { model, connectionURI } from '../mongo/db.mjs';
 
 export default function Calendar() {
+
+
   // Get current date
   const currentDate = new Date();
   const prevDateObj = new Date();
@@ -20,6 +22,24 @@ export default function Calendar() {
   const [showModal, setShowModal] = useState(false);
   const [selectedCell, setSelectedCell] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
+
+  //Temporary user data storage before implementing database
+  useEffect(() => {
+    let userDataValue = localStorage.getItem("userData") || "";
+    setUserData(userDataValue);
+  }, []);
+
+  const [userData, setUserData] = useState(userDataValue);
+
+  const getUserData = () => {
+    let userDataJSON = JSON.parse(userData);
+    return userDataJSON;
+  }
+
+  const setUserDataLocal = (userData) => {
+    let userDataJSON = JSON.stringify(userData);
+    localStorage.setItem("userData", userDataJSON);
+  }
 
   // Function to get the number of days in a month
   const getDaysInMonth = (date) => {
@@ -176,10 +196,10 @@ export default function Calendar() {
   const prevMonthDays = getPrevMonthDays(date);
   // const remainingDays = getRemainingDays(date);
   const nextMonthDays = getNextMonthDays(date);
-  const calendarDays = Array.from({ length: 35}, (_, index) => {
+  const calendarDays = Array.from({ length: 35}, (item, index) => {
     // console.log(prevMonthDays);
     if (index < firstDayOfMonth) {
-      return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
+      return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index, events:{}};
     } else if(index < daysInMonth + firstDayOfMonth){
       console.log(index - firstDayOfMonth + 1);
       return {day: index - firstDayOfMonth + 1, id: index};
@@ -244,6 +264,9 @@ export default function Calendar() {
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
             <div key={day} className="day">
               {day}
+              <div className="event-list">
+                {}
+              </div>
             </div>
           ))}
         </div>

@@ -11,7 +11,7 @@ export default function Event() {
 
     return (
         <div className="event">
-            <input type="text" val="" className="event-input"></input>
+            <input type="text" className="event-input" placeholder="Enter event here..."></input>
         </div>
     );  
 };
