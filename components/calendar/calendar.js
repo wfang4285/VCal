@@ -180,11 +180,11 @@ export default function Calendar() {
     // console.log(prevMonthDays);
     if (index < firstDayOfMonth) {
       return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
-    } else if(index > daysInMonth + firstDayOfMonth - 1){
+    } else if(index < daysInMonth + firstDayOfMonth - 1){
       console.log(index - firstDayOfMonth + 1);
-      return {day: index, id: index};
+      return {day: index - firstDayOfMonth + 1, id: index};
     } else {
-      return{day: daysInMonth - firstDayOfMonth - 1 + index, id: index}
+      return{day: index - firstDayOfMonth + 1 - daysInMonth + 1, id: index}
     }
   });
 
