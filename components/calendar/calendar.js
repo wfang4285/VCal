@@ -166,9 +166,7 @@ export default function Calendar() {
     }
   };
 
-  const addEvent = () => {
-    let tempEventArray = userData;
-    
+  const addEvent = () => {    
     setUserData((tempEventArray)=>{
       let newArray = [...tempEventArray];
       console.log("selected cell:" + selectedCell);
@@ -178,9 +176,9 @@ export default function Calendar() {
         month: calendarDays[selectedCell].month, 
         day: calendarDays[selectedCell].day
       });
+      setUserDataLocal(newArray);
       return newArray;
     });
-    setUserDataLocal(tempEventArray);
   }
 
 
@@ -250,7 +248,7 @@ export default function Calendar() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [date]);
+  }, [date,selectedCell]);
 
   //Gets number of days in the current omnth
   const daysInMonth = getDaysInMonth(date);
