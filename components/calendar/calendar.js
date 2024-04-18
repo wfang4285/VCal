@@ -95,7 +95,7 @@ export default function Calendar() {
     } else if(key === "ArrowDown" || key === "s"){
       moveSelectedDown();
     } else if(key === "Enter"){
-      setShowModal(true);
+      // setShowModal(true);
     } else if(key === "l"){ //L toggles darkmode
       setDarkMode((d) => !d);
     }
@@ -180,11 +180,11 @@ export default function Calendar() {
     // console.log(prevMonthDays);
     if (index < firstDayOfMonth) {
       return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
-    } else if(index < daysInMonth + firstDayOfMonth - 1){
+    } else if(index < daysInMonth + firstDayOfMonth){
       console.log(index - firstDayOfMonth + 1);
       return {day: index - firstDayOfMonth + 1, id: index};
     } else {
-      return{day: index - firstDayOfMonth + 1 - daysInMonth + 1, id: index}
+      return{day: index - firstDayOfMonth + 1 - daysInMonth, id: index}
     }
   });
 
@@ -261,17 +261,19 @@ export default function Calendar() {
           ))}
         </div>
       </div>
-      {showModal && (
-        <Modal
-          onClose={() => setShowModal(false)}
-          onSubmit={(eventData) => {
-            // Handle event data submission here
-            //Temporary comment out to avoid async error
-            // AddEvent(eventData, model, connectionURI);
-            setShowModal(false);
-          }}
-        />
-      )}
+      {
+      // showModal && (
+      //   <Modal
+      //     onClose={() => setShowModal(false)}
+      //     onSubmit={(eventData) => {
+      //       // Handle event data submission here
+      //       //Temporary comment out to avoid async error
+      //       // AddEvent(eventData, model, connectionURI);
+      //       setShowModal(false);
+      //     }}
+      //   />
+      // )
+      }
     </div>
   );  
 

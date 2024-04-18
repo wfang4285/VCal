@@ -166,3 +166,15 @@ button:hover {
 .login-button:hover {
   background-color: #c1351e; /* Darker shade of Google red color */
 }
+
+.event{
+  background-color: #c1351e;
+  padding: 2px;
+  border-radius: 10px;
+}
+
+.event-input{
+  background-color: transparent;
+  border: 0;
+  color: white;
+}
