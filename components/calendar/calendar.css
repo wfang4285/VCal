@@ -1,18 +1,18 @@
 /* Calendar Container */
 #calendar-container {
   background-color: #ffffff;
-  color: #000000;
-  transition: background-color 0.3s, color 0.3s;
+  color: #555555;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 .dark-mode #calendar-container {
-  background-color: #333333;
+  background-color: #555555;
   color: #ffffff;
 }
 
 /* Calendar */
 .dark-mode #calendar .days {
-  background-color: #444444;
+  background-color: #777777;
   color: #ffffff;
 }
 
@@ -27,10 +27,6 @@
 
 .dark-mode #calendar .dates .date:hover {
   background-color: #777777;
-}
-
-.dark-mode .modal-overlay {
-  background-color: rgba(51, 51, 51, 0.8);
 }
 
 .dark-mode .modal {
