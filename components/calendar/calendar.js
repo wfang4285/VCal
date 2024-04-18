@@ -177,31 +177,34 @@ export default function Calendar() {
   // const remainingDays = getRemainingDays(date);
   const nextMonthDays = getNextMonthDays(date);
   const calendarDays = Array.from({ length: 35}, (_, index) => {
+    // console.log(prevMonthDays);
     if (index < firstDayOfMonth) {
       return {day: prevMonthDays - firstDayOfMonth + index + 1, id: index};
     } else if(index > daysInMonth + firstDayOfMonth - 1){
-      return {day: index - firstDayOfMonth + 1, id: index};
+      console.log(index - firstDayOfMonth + 1);
+      return {day: index, id: index};
     } else {
-      return{day: daysInMonth + firstDayOfMonth - 1, id: index}
+      return{day: daysInMonth - firstDayOfMonth - 1 + index, id: index}
     }
   });
 
-  const AddEvent = async (eventData, model, connectionURI) => {
-    const eventData = await model.findOne({ index });
+  // Temporarily comment out to avoid async error
+  // const AddEvent = async (eventData, model, connectionURI) => {
+  //   const eventData = await model.findOne({ index });
 
-    if (eventData) {
-      eventData.title = updatedEvent.title;
-      eventData.description = updatedEvent.description;
-      eventData.startTime = new Date(updatedEvent.startTime);
-      eventData.endTime = new Date(updatedEvent.endTime);
+  //   if (eventData) {
+  //     eventData.title = updatedEvent.title;
+  //     eventData.description = updatedEvent.description;
+  //     eventData.startTime = new Date(updatedEvent.startTime);
+  //     eventData.endTime = new Date(updatedEvent.endTime);
 
-      await eventData.save();
+  //     await eventData.save();
 
-      console.log('Event updated successfully');
-    } else {
-      console.log('Event not found');
-    }
-  };  
+  //     console.log('Event updated successfully');
+  //   } else {
+  //     console.log('Event not found');
+  //   }
+  // };  
   
   //Test, change it so index doesn't need to be added in manually and is done in back
   //Deletion from database needs to be done
@@ -222,10 +225,11 @@ export default function Calendar() {
     }
   }, [darkMode]);
 
-  async function fetchEvents() {
-    const eventData = await model.find({});
-    AddEvent(eventData);
-  }
+  // Temporary comment out to avoid async error
+  // async function fetchEvents() {
+  //   const eventData = await model.find({});
+  //   AddEvent(eventData);
+  // }
 
   return (
     <div id="calendar-container">
@@ -262,7 +266,8 @@ export default function Calendar() {
           onClose={() => setShowModal(false)}
           onSubmit={(eventData) => {
             // Handle event data submission here
-            AddEvent(eventData, model, connectionURI);
+            //Temporary comment out to avoid async error
+            // AddEvent(eventData, model, connectionURI);
             setShowModal(false);
           }}
         />
