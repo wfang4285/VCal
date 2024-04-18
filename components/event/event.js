@@ -8,13 +8,16 @@ import { IconTrash } from '@tabler/icons-react';
 // import Modal from '../modal/modal';
 import { model, connectionURI } from '../mongo/db.mjs';
 
-export default function Event({editValue, deleteEvent, propId}) {
+export default function Event({loadValue, editValue, deleteEvent, propId, setMode}) {
 
     return (
-        <div className="event">
-            <input type="text" className="event-input" placeholder="Enter event here..." onchange={()=>{
-                editValue(propId);
-            }}></input>
+        <div className="event" onClick={(e)=>{
+            e.stopPropagation();
+            setMode("insert");
+        }}>
+            <input type="text" className="event-input" placeholder="Enter event here..." value={loadValue} onChange = {(e)=>{editValue(propId, e.target.value)}} onKeyUp={(e)=>{
+                editValue(propId, e.target.value);
+            }} autoFocus/>
             {<IconTrash color="white" size="20" onClick={()=>{
                 deleteEvent(propId);
             }}/>}

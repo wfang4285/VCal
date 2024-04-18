@@ -43,7 +43,7 @@ export default function Calendar() {
     let userDataJSON = JSON.stringify(newUserData);
     localStorage.setItem("userData", userDataJSON);
   }
-
+  
 
   const interpretTime = (string) => {
 
@@ -87,8 +87,8 @@ export default function Calendar() {
     // newNextDate.setMonth(newNextDate.getMonth());
     newDate.setMonth(newDate.getMonth() - 1);
     newPrevDate.setMonth(newPrevDate.getMonth() - 2);
-
-    setNextDate(newNextDate)
+    
+    setNextDate(newNextDate);
     setDate(newDate);
     setPrevDate(newPrevDate);
   };
@@ -155,6 +155,9 @@ export default function Calendar() {
       if(mode === "normal"){
         event.preventDefault();
         setMode("insert");
+        if(getEventsFromDate( calendarDays[selectedCell].year,  calendarDays[selectedCell].month,  calendarDays[selectedCell].day).length === 0) {
+          addEvent();  
+        }
       } else if(mode === "insert"){
         addEvent();
       }
@@ -168,6 +171,11 @@ export default function Calendar() {
     }
   };
 
+  // const getSelectedDate = () => {
+  //   return calendarDays[selectedCell];
+  // }
+
+  // Add event
   const addEvent = () => {    
     setUserData((tempEventArray)=>{
       let newArray = [...tempEventArray];
@@ -186,11 +194,22 @@ export default function Calendar() {
 
   // Enable editing of event
   const editEvent = (propId, newText) => {
+    console.log("editing new text: ", newText);
     setUserData((tempEventArray)=>{
       let newArray = [...tempEventArray];
       let tempIndex = newArray.findIndex(item => item.id === propId);
       newArray[tempIndex].text = newText;
-      // newArray[selectedCell] = event;
+      setUserDataLocal(newArray);
+      return newArray;
+    });
+  }
+
+  // Delete event
+  const deleteEvent = (propId) => {
+    setUserData((tempEventArray)=>{
+      let newArray = [...tempEventArray];
+      let tempIndex = newArray.findIndex(item => item.id === propId);
+      newArray.splice(tempIndex, 1);
       setUserDataLocal(newArray);
       return newArray;
     });
@@ -247,7 +266,7 @@ export default function Calendar() {
     return ((n % m) + m) % m;
   }
 
-  //Each event has a cooresponding ISO
+  //Each event should have a cooresponding ISO
   const getEventsFromDate = (year, month, day) => {
     let tempArray = userData;
     //Filter events by date
@@ -381,6 +400,7 @@ export default function Calendar() {
                 setSelectedCell={setSelectedCell} 
                 editValue={editEvent}
                 deleteEvent={deleteEvent}
+                setMode={setMode}
                 key={currentDay.id}
               />
             )

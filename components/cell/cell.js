@@ -9,18 +9,19 @@ import Event from '../event/event';
 // import Modal from '../modal/modal';
 import { model, connectionURI } from '../mongo/db.mjs';
 
-export default function Cell({day, events, index, selectedCell, setSelectedCell, editValue, deleteEvent}) {
+export default function Cell({day, events, index, selectedCell, setSelectedCell, editValue, deleteEvent, setMode}) {
     return (
         <div
               className={`date ${index === selectedCell ? 'selected' : ''}`}
               onClick={() => {
+                setMode("normal");
                 setSelectedCell(index);
               }}
             >
               {day}
               <div className="event-list">
                 {events.map((event, index2) => (
-                    <Event  key={index2} editValue={editValue} deleteEvent={deleteEvent} propId={event.id}></Event>
+                    <Event key={index2} loadValue={event.text} editValue={editValue} deleteEvent={deleteEvent} propId={event.id} setMode={setMode}></Event>
                 ))}
               </div>
             </div>
