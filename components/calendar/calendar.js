@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import mongoose from 'mongoose';
 import { useEffect } from 'react';
+import Event from '../event/event';
 import Navigation from '../navigation/navigation';
 import Modal from '../modal/modal';
 import './calendar.css';
@@ -22,24 +23,29 @@ export default function Calendar() {
   const [showModal, setShowModal] = useState(false);
   const [selectedCell, setSelectedCell] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
+  const [mode, setMode] = useState("normal");
+
+  const [userData, setUserData] = useState([]);
 
   //Temporary user data storage before implementing database
   useEffect(() => {
     let userDataValue = localStorage.getItem("userData") || "";
-    if(userDataValue === ""){
+    if(userDataValue !== ""){
+      setUserData(JSON.parse(userDataValue));
+    } else {
       localStorage.setItem("userData", "[]");
     }
-    setUserData(userDataValue);
+    console.log("local storage: " + localStorage.getItem("userData"));
   }, []);
 
-  const [userData, setUserData] = useState(userDataValue);
 
-  const getUserData = () => {
-    let userDataJSON = JSON.parse(userData);
-    return userDataJSON;
-  }
+  // const getUserData = () => {
+  //   console.log(userData);
+  //   let userDataJSON = JSON.parse(userData);
+  //   return userDataJSON;
+  // }
 
-  const setUserDataLocal = (userData) => {
+  const setUserDataLocal = () => {
     let userDataJSON = JSON.stringify(userData);
     localStorage.setItem("userData", userDataJSON);
   }
@@ -90,7 +96,7 @@ export default function Calendar() {
 
     setNextDate(newNextDate)
     setDate(newDate);
-    setPrevDate(prevDate);
+    setPrevDate(newPrevDate);
   };
 
   // Function to handle next month button click
@@ -112,7 +118,7 @@ export default function Calendar() {
   const handleKeyDown = (event) => {
     //Keycode is deprecated
     const { key, target, ctrlKey } = event;
-
+    // event.preventDefault();
     //Prevents modal movement while creating event.
     if(target.name === 'title' ||
     target.name === 'description' ||
@@ -120,17 +126,37 @@ export default function Calendar() {
     target.name === 'endTime'){
       return;
     }
+
+
     if(key === "ArrowLeft" && ctrlKey){
+      if(mode === "normal"){
+        event.preventDefault();
+      }
       goToPrevMonth();
     } else if(key === "ArrowRight" && ctrlKey){
+      if(mode === "normal"){
+        event.preventDefault();
+      }
       goToNextMonth();
     } else if(key === "ArrowLeft" || key === "a"){
+      if(mode === "normal"){
+        event.preventDefault();
+      }
       moveSelectedLeft();
     } else if(key === "ArrowRight" || key === "d"){
+      if(mode === "normal"){
+        event.preventDefault();
+      }
       moveSelectedRight();
     } else if(key === "ArrowUp" || key === "w"){
+      if(mode === "normal"){
+        event.preventDefault();
+      }
       moveSelectedUp();
     } else if(key === "ArrowDown" || key === "s"){
+      if(mode === "normal"){
+        event.preventDefault();
+      }
       moveSelectedDown();
     } else if(key === "Enter"){
       addEvent();
@@ -140,13 +166,21 @@ export default function Calendar() {
     }
   };
 
-  const getSelectedCellDate = () => {
-    return calendarDays[selectedCell];    
-  }
-
-  const addEvent = (tempText) => {
-    let tempEventArray = getUserData();
-    tempEventArray.push({text: tempText, year: "", month: "", day:""});
+  const addEvent = () => {
+    let tempEventArray = userData;
+    
+    setUserData((tempEventArray)=>{
+      let newArray = [...tempEventArray];
+      console.log("selected cell:" + selectedCell);
+      newArray.push({
+        text: "New Event", 
+        year: calendarDays[selectedCell].year, 
+        month: calendarDays[selectedCell].month, 
+        day: calendarDays[selectedCell].day
+      });
+      return newArray;
+    });
+    setUserDataLocal(tempEventArray);
   }
 
 
@@ -155,10 +189,7 @@ export default function Calendar() {
       current = mod(current+1,calendarDays.length);
       if(current != mod(current, calendarDays.length)){
         current = mod(current, calendarDays.length);
-      } else {
-        console.log("current cell:" + current);
       }
-      console.log(current);
       return current;
     });
   }
@@ -168,10 +199,7 @@ export default function Calendar() {
       current = mod(current-1,calendarDays.length);
       if(current != mod(current, calendarDays.length)){
         current = mod(current, calendarDays.length);
-      } else {
-        console.log("current cell:" + current);
       }
-      console.log(current);
       return current;
     });
   }
@@ -181,10 +209,7 @@ export default function Calendar() {
       current = mod(current-7, calendarDays.length);
       if(current != mod(current, calendarDays.length)){
         current = mod(current, calendarDays.length);
-      } else {
-        console.log("current cell:" + current);
       }
-      console.log(current);
       return current;
     });
   }
@@ -194,10 +219,7 @@ export default function Calendar() {
       current = mod(current+7,calendarDays.length);
       if(current != mod(current, calendarDays.length)){
         current = mod(current, calendarDays.length);
-      } else {
-        console.log("current cell:" + current);
       }
-      console.log(current);
       return current;
     });
   }
@@ -214,7 +236,7 @@ export default function Calendar() {
 
   //Each event has a cooresponding ISO
   const getEventsFromDate = (year, month, day) => {
-    let tempArray = getUserData();
+    let tempArray = userData;
     //Filter events by date
     let eventsFromDate = tempArray.filter(function(e, i){
       return e.year === year && e.month === month && e.day === day;
@@ -246,26 +268,26 @@ export default function Calendar() {
     if (index < firstDayOfMonth) {
       tempDay = prevMonthDays - firstDayOfMonth + index + 1;
       tempMonth = prevDate.getMonth();
-      tempYear = prevDate.getYear();
-      
+      tempYear = prevDate.getFullYear();
     } else if(index < daysInMonth + firstDayOfMonth){
       tempDay = index - firstDayOfMonth + 1;
       tempMonth = date.getMonth();
-      tempYear = date.getYear();
-      return {
-        day: index - firstDayOfMonth + 1, 
-        month: date.getMonth(),
-        year: date.getYear(),
-        id: index,
-        events:{}
-      };
+      tempYear = date.getFullYear();
     } else {
       tempDay = index - firstDayOfMonth + 1 - daysInMonth;
       tempMonth = nextDate.getMonth();
-      tempYear = nextDate.getYear();
+      tempYear = nextDate.getFullYear();
     }
 
+    
     tempEvents = getEventsFromDate(tempYear, tempMonth, tempDay);
+    // console.log(JSON.stringify({
+    //   day: tempDay, 
+    //   month: tempMonth,
+    //   year: tempYear, 
+    //   id: index, 
+    //   events: tempEvents
+    // }));
     return {
       day: tempDay, 
       month: tempMonth,
@@ -331,10 +353,6 @@ export default function Calendar() {
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
             <div key={day} className="day">
               {day}
-              <div className="event-list">
-                {
-                }
-              </div>
             </div>
           ))}
         </div>
@@ -348,6 +366,13 @@ export default function Calendar() {
               }}
             >
               {day.day}
+              <div className="event-list">
+                {
+                  day.events.map((event, index2) => (
+                    <Event key={index+"-"+index2}></Event>
+                  ))
+                }
+              </div>
             </div>
           ))}
         </div>
