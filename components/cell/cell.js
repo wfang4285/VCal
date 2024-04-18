@@ -1,0 +1,28 @@
+"use client";
+
+import React, { useState } from 'react';
+import mongoose from 'mongoose';
+import { useEffect } from 'react';
+import { IconTrash } from '@tabler/icons-react';
+import Event from '../event/event';
+// import Navigation from '../navigation/navigation';
+// import Modal from '../modal/modal';
+import { model, connectionURI } from '../mongo/db.mjs';
+
+export default function Cell({day, events, index, selectedCell, setSelectedCell}) {
+    return (
+        <div
+              className={`date ${index === selectedCell ? 'selected' : ''}`}
+              onClick={() => {
+                setSelectedCell(index);
+              }}
+            >
+              {day}
+              <div className="event-list">
+                {events.map((event, index2) => (
+                    <Event key={index2}></Event>
+                ))}
+              </div>
+            </div>
+    );  
+};

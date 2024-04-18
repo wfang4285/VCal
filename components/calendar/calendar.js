@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import { useEffect } from 'react';
 import Event from '../event/event';
 import Navigation from '../navigation/navigation';
+import Cell from '../cell/cell';
 import Modal from '../modal/modal';
 import './calendar.css';
 import { model, connectionURI } from '../mongo/db.mjs';
@@ -37,13 +38,6 @@ export default function Calendar() {
     }
     console.log("local storage: " + localStorage.getItem("userData"));
   }, []);
-
-
-  // const getUserData = () => {
-  //   console.log(userData);
-  //   let userDataJSON = JSON.parse(userData);
-  //   return userDataJSON;
-  // }
 
   const setUserDataLocal = (newUserData) => {
     let userDataJSON = JSON.stringify(newUserData);
@@ -127,39 +121,44 @@ export default function Calendar() {
       return;
     }
 
-
     if(key === "ArrowLeft" && ctrlKey){
       if(mode === "normal"){
         event.preventDefault();
+        goToPrevMonth();
       }
-      goToPrevMonth();
     } else if(key === "ArrowRight" && ctrlKey){
       if(mode === "normal"){
         event.preventDefault();
+        goToNextMonth();
       }
-      goToNextMonth();
     } else if(key === "ArrowLeft" || key === "a"){
       if(mode === "normal"){
         event.preventDefault();
+        moveSelectedLeft();
       }
-      moveSelectedLeft();
     } else if(key === "ArrowRight" || key === "d"){
       if(mode === "normal"){
         event.preventDefault();
+        moveSelectedRight();
       }
-      moveSelectedRight();
     } else if(key === "ArrowUp" || key === "w"){
       if(mode === "normal"){
         event.preventDefault();
+        moveSelectedUp();
       }
-      moveSelectedUp();
     } else if(key === "ArrowDown" || key === "s"){
       if(mode === "normal"){
         event.preventDefault();
+        moveSelectedDown();
       }
-      moveSelectedDown();
     } else if(key === "Enter"){
-      addEvent();
+      if(mode === "normal"){
+        event.preventDefault();
+        setMode("insert");
+      } else if(mode === "insert"){
+        addEvent();
+      }
+      
       // setShowModal(true);
     } else if(key === "l"){ //L toggles darkmode
       setDarkMode((d) => !d);
@@ -171,7 +170,7 @@ export default function Calendar() {
       let newArray = [...tempEventArray];
       console.log("selected cell:" + selectedCell);
       newArray.push({
-        text: "New Event", 
+        text: "", 
         year: calendarDays[selectedCell].year, 
         month: calendarDays[selectedCell].month, 
         day: calendarDays[selectedCell].day
@@ -248,7 +247,7 @@ export default function Calendar() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [date,selectedCell]);
+  }, [date,selectedCell, mode]);
 
   //Gets number of days in the current omnth
   const daysInMonth = getDaysInMonth(date);
@@ -345,6 +344,7 @@ export default function Calendar() {
         currentDate={date}
         prevMonth={goToPrevMonth}
         nextMonth={goToNextMonth}
+        mode={mode}
       />
       <div id="calendar">
         <div className="days">
@@ -355,24 +355,11 @@ export default function Calendar() {
           ))}
         </div>
         <div className="dates">
-          {calendarDays.map((day, index) => (
-            <div
-              key={day.id}
-              className={`date ${index === selectedCell ? 'selected' : ''}`}
-              onClick={() => {
-                setSelectedCell(index);
-              }}
-            >
-              {day.day}
-              <div className="event-list">
-                {
-                  day.events.map((event, index2) => (
-                    <Event key={index+"-"+index2}></Event>
-                  ))
-                }
-              </div>
-            </div>
-          ))}
+          {calendarDays.map((currentDay, index) => {
+            return (
+              <Cell day={currentDay.day} events={currentDay.events} index={index} selectedCell={selectedCell} setSelectedCell={setSelectedCell} key={currentDay.id}/>
+            )
+          })}
         </div>
       </div>
       {
