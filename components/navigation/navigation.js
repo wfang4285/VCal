@@ -1,5 +1,5 @@
 "use client";
-import { IconChevronLeft } from '@tabler/icons-react';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 
 
 export default function Navigation({currentDate, prevMonth, nextMonth, mode}) {
