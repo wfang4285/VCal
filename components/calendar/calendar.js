@@ -158,10 +158,13 @@ export default function Calendar() {
       } else if(mode === "insert"){
         addEvent();
       }
-      
       // setShowModal(true);
     } else if(key === "l"){ //L toggles darkmode
-      setDarkMode((d) => !d);
+      if(mode === "normal"){
+        setDarkMode((d) => !d);
+      }
+    } else if(key === "Escape"){
+      setMode("normal");
     }
   };
 
@@ -173,8 +176,21 @@ export default function Calendar() {
         text: "", 
         year: calendarDays[selectedCell].year, 
         month: calendarDays[selectedCell].month, 
-        day: calendarDays[selectedCell].day
+        day: calendarDays[selectedCell].day,
+        id: crypto.randomUUID()
       });
+      setUserDataLocal(newArray);
+      return newArray;
+    });
+  }
+
+  // Enable editing of event
+  const editEvent = (propId, newText) => {
+    setUserData((tempEventArray)=>{
+      let newArray = [...tempEventArray];
+      let tempIndex = newArray.findIndex(item => item.id === propId);
+      newArray[tempIndex].text = newText;
+      // newArray[selectedCell] = event;
       setUserDataLocal(newArray);
       return newArray;
     });
@@ -314,14 +330,14 @@ export default function Calendar() {
   
   //Test, change it so index doesn't need to be added in manually and is done in back
   //Deletion from database needs to be done
-  const EditEvent = (index, updatedEvent) => {
-    const eventData = model.find({index});
-    eventData.title = updatedEvent.title;
-    eventData.description = updatedEvent.description;
-    eventData.startTime = updatedEvent.startTime;
-    eventData.endTime = updatedEvent.endTime;
-    setEvents(updatedEvents);
-  };
+  // const EditEvent = (index, updatedEvent) => {
+  //   const eventData = model.find({index});
+  //   eventData.title = updatedEvent.title;
+  //   eventData.description = updatedEvent.description;
+  //   eventData.startTime = updatedEvent.startTime;
+  //   eventData.endTime = updatedEvent.endTime;
+  //   setEvents(updatedEvents);
+  // };
 
   useEffect(() => {
     if (darkMode) {
@@ -357,7 +373,16 @@ export default function Calendar() {
         <div className="dates">
           {calendarDays.map((currentDay, index) => {
             return (
-              <Cell day={currentDay.day} events={currentDay.events} index={index} selectedCell={selectedCell} setSelectedCell={setSelectedCell} key={currentDay.id}/>
+              <Cell 
+                day={currentDay.day} 
+                events={currentDay.events} 
+                index={index} 
+                selectedCell={selectedCell} 
+                setSelectedCell={setSelectedCell} 
+                editValue={editEvent}
+                deleteEvent={deleteEvent}
+                key={currentDay.id}
+              />
             )
           })}
         </div>
