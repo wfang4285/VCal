@@ -45,8 +45,8 @@ export default function Calendar() {
   //   return userDataJSON;
   // }
 
-  const setUserDataLocal = () => {
-    let userDataJSON = JSON.stringify(userData);
+  const setUserDataLocal = (newUserData) => {
+    let userDataJSON = JSON.stringify(newUserData);
     localStorage.setItem("userData", userDataJSON);
   }
 
