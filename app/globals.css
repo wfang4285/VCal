@@ -177,6 +177,10 @@ button:hover {
   display: flex;
 }
 
+.date.selected .event.selected{
+  background: linear-gradient(90deg, rgba(66,0,255,1) 0%, rgba(148,0,255,1) 100%);
+}
+
 .event-input{
   background-color: transparent;
   border: 0;

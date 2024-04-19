@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import mongoose from 'mongoose';
+import mongoose, { set } from 'mongoose';
 import { useEffect } from 'react';
 import Event from '../event/event';
 import Navigation from '../navigation/navigation';
@@ -23,6 +23,7 @@ export default function Calendar() {
   const [nextDate, setNextDate] = useState(nextDateObj);
   const [showModal, setShowModal] = useState(false);
   const [selectedCell, setSelectedCell] = useState(0);
+  const [selectedEvent, setSelectedEvent] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
   const [mode, setMode] = useState("normal");
 
@@ -188,6 +189,7 @@ export default function Calendar() {
         id: crypto.randomUUID()
       });
       setUserDataLocal(newArray);
+      setSelectedEvent(newArray.length-1);
       return newArray;
     });
   }
@@ -398,6 +400,8 @@ export default function Calendar() {
                 index={index} 
                 selectedCell={selectedCell} 
                 setSelectedCell={setSelectedCell} 
+                selectedEvent={selectedEvent}
+                setSelectedEvent={setSelectedEvent}
                 editValue={editEvent}
                 deleteEvent={deleteEvent}
                 setMode={setMode}
