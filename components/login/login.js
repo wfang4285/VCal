@@ -5,6 +5,8 @@ export default function loginPage() {
 
     //state to toogle between login and new user registration
     const [isLoginView, setIsLoginView] = useState(true);
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const handleLogin(e){
         e.preventDefault();
@@ -14,13 +16,40 @@ export default function loginPage() {
     //manage registration submission
     const handleRegister = (e) => {
         e.preventDefault();
-        console.log("Registering new user...")
+        if (validatePassword(password)) { 
+          console.log("Registering new user...");
+        } else {
+          alert("Please ensure your password meets all the requirements."); 
+        }
     };
 
     function handleGoogleLogin(){
         console.log("Logging in with Google!")
     }
 
+    const handlePasswordChange = (e) => { 
+      const newPass = e.target.value;
+      setPassword(newPass); 
+      validatePassword(newPass); 
+    };
+
+    const validatePassword = (password) => { 
+      const requirements = [
+        { regex: /.{8,}/, message: "Password must be at least 8 characters long." },
+        { regex: /[0-9]/, message: "Password must contain at least one number." },
+        { regex: /[A-Z]/, message: "Password must contain at least one uppercase letter." },
+        { regex: /[^A-Za-z0-9]/, message: "Password must contain at least one special character." }
+      ];
+      
+      const failed = requirements.filter(req => !req.regex.test(password));
+      if (failed.length === 0) {
+        setPasswordError(''); 
+        return true;
+      } else {
+        setPasswordError(failed.map(req => req.message).join(' ')); 
+        return false;
+      }
+    };
     const renderLoginForm = () => (
         <form onSubmit={handleLogin}>
           <div className="input-group">
