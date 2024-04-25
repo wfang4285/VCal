@@ -6,7 +6,7 @@ export default function loginPage() {
     //state to toogle between login and new user registration
     const [isLoginView, setIsLoginView] = useState(true);
     const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+    const [passwordError, setPasswordError] = useState([]);
 
     const handleLogin(e){
         e.preventDefault();
@@ -16,7 +16,7 @@ export default function loginPage() {
     //manage registration submission
     const handleRegister = (e) => {
         e.preventDefault();
-        if (validatePassword(password)) { 
+        if (passwordErrors.length === 0 && password) { 
           console.log("Registering new user...");
         } else {
           alert("Please ensure your password meets all the requirements."); 
@@ -41,14 +41,12 @@ export default function loginPage() {
         { regex: /[^A-Za-z0-9]/, message: "Password must contain at least one special character." }
       ];
       
-      const failed = requirements.filter(req => !req.regex.test(password));
-      if (failed.length === 0) {
-        setPasswordError(''); 
-        return true;
-      } else {
-        setPasswordError(failed.map(req => req.message).join(' ')); 
-        return false;
-      }
+      const errors = requirements
+      .filter(req => !req.regex.test(password))
+      .map(req => req.message); 
+      
+      setPasswordErrors(errors); 
+      return errors.length === 0;
     };
     const renderLoginForm = () => (
         <form onSubmit={handleLogin}>
