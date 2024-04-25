@@ -1,5 +1,8 @@
 import React from 'react';
 import './global.css'
+//testing google authentication function 
+import { auth } from './firebase'
+import firebase from 'firebase/app';
 
 export default function loginPage() {
 
@@ -14,6 +17,7 @@ export default function loginPage() {
     };
 
     //manage registration submission
+  
     const handleRegister = (e) => {
         e.preventDefault();
         if (passwordErrors.length === 0 && password) { 
@@ -23,9 +27,17 @@ export default function loginPage() {
         }
     };
 
-    function handleGoogleLogin(){
-        console.log("Logging in with Google!")
-    }
+    function handleGoogleLogin= async () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        const result = await auth.signInWithPopup(provider);
+        //getting google access token
+        console.log('Success:', result);
+      } catch (error) {
+        console.error(error);
+        alert("Error logging in with Google: " + error.message);
+      }
+    };
 
     const handlePasswordChange = (e) => { 
       const newPass = e.target.value;
