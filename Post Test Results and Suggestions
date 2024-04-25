@@ -1,0 +1,37 @@
+Post Test Questionnaires Result (5 participants in total)
+(Participant will answer with a score of 1-5, 1 being strongly disagree, 5 being strongly agree)
+“I found the website complex”
+ Result: 1 (0%) , 2(60%) , 3(20%) , 4(20%) , 5(0%)
+"I thought the website was easy to use."
+ Result: 1 (0%) , 2(20%) , 3(20%) , 4(20%) , 5(40%)
+"I think that I would need the support of a technical person to be able to use this website."
+ Result: 1 (0%) , 2(40%) , 3(40%) , 4(20%) , 5(0%)
+"I found various functions on this website to be more effective than the existing calendar website that I used ."
+ Result: 1 (0%) , 2(0%) , 3(20%) , 4(60%) , 5(20%)
+"I thought there was too much inconsistency in this website."
+ Result: 1 (0%) , 2(0%) , 3(60%) , 4(20%) , 5(20%)
+"I would imagine that most people would learn to use this website very quickly."
+ Result: 1 (0%) , 2() , 3(60%) , 4(20%) , 5(20%)
+"I felt confident using the website."
+ Result: 1 (0%) , 2(0%) , 3(0%) , 4(40%) , 5(60%)
+"I needed to learn a lot of things before I could get going with this website."
+ Result: 1 (0%) , 2() , 3() , 4(80%) , 5(20%)
+
+
+Analysis:
+People seem to agree this website has various functions that are more effective than existing calendar websites, 
+however, people also feel like there are a lot of functions of this website that they are not familiar with (keyboard shortcuts).
+People are also hesitant on agreeing with people would learn to use this website quickly. Some people suggested there are inconsistencies 
+with the website UI.
+
+Suggestion:
+Design some functions to provide users with a learning curve, meaning that new users will be able to use the calendar without knowing all the
+functions, but able to learn the function along the way. For example, give them a tutorial book on the menu bar, and give them new user functions 
+like allowing mouse to drag the event block instead of directly using keyboard to perform function.
+
+Making the UI having the same theme, some users notice the main UI and login UI seem to have different color theme, they want the theme to be more consistent. 
+
+
+
+
+
